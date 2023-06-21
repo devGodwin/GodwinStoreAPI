@@ -2,7 +2,6 @@ using System.Net;
 using AutoFixture;
 using AutoMapper;
 using GodwinStoreAPI.Controllers;
-using GodwinStoreAPI.Data.StoreData;
 using GodwinStoreAPI.Model.CustomerModel.RequestModel;
 using GodwinStoreAPI.Model.CustomerModel.ResponseModel;
 using GodwinStoreAPI.Model.Filters;
@@ -17,8 +16,6 @@ using Xunit;
 
 namespace TestStore.UnitTest;
 
-
-
 public class CustomerControllerTests : IClassFixture<TestFixture>
 {
     private readonly CustomerController _customerController;
@@ -31,83 +28,6 @@ public class CustomerControllerTests : IClassFixture<TestFixture>
         var mapper = fixture.ServiceProvider.GetService<IMapper>();
 
         _customerController = new CustomerController(_customerServicesMock.Object);
-    }
-    
-    [Fact]
-    public async Task Register_New_Customer_If_Exist_Return_Conflict()
-    {
-        // Arrange
-        var customer = _fixture.Create<Customer>();
-          _customerServicesMock.Setup(repos => repos.RegisterCustomerAsync(It.IsAny<RegisterCustomerRequestModel>()))
-            .ReturnsAsync(new BaseResponse<RegisterCustomerResponseModel>()
-            {
-                Code = (int)HttpStatusCode.Conflict,
-                Data = new RegisterCustomerResponseModel(),
-                Message = It.IsAny<string>()
-            });
-
-        // Act
-        var result = await _customerController.RegisterCustomer(new RegisterCustomerRequestModel()
-        {
-            CustomerName = customer.CustomerName,
-            Contact = customer.Contact,
-            Email = customer.Email,
-        }) as ObjectResult;
-
-        // Assert
-        Assert.Equal(409,result?.StatusCode);
-    }
-    
-    [Fact]
-    public async Task Register_Customer_ReturnOk()
-    {
-        // Arrange
-        var customer = _fixture.Create<Customer>();
-
-        _customerServicesMock.Setup(repos => repos.RegisterCustomerAsync(It.IsAny<RegisterCustomerRequestModel>()))
-            .ReturnsAsync(new BaseResponse<RegisterCustomerResponseModel>()
-            {
-                Code = (int)HttpStatusCode.Created,
-                Data = new RegisterCustomerResponseModel(),
-                Message = It.IsAny<string>()
-
-            });
-
-        // Act
-        var result = await _customerController.RegisterCustomer(new RegisterCustomerRequestModel()
-        {
-            CustomerName = customer.CustomerName,
-            Contact = customer.Contact,
-            Email = customer.Email
-        }) as ObjectResult;
-  
-        // Assert
-        Assert.Equal(201,result?.StatusCode);
-    }
-    
-    [Fact]
-    public async Task Login_Customer_Return_Ok()
-    {
-        // Arrange
-        var customer = _fixture.Create<Customer>();
-        
-        _customerServicesMock.Setup(repos => repos.LoginCustomerAsync(It.IsAny<CustomerLoginRequestModel>()))
-            .ReturnsAsync(new BaseResponse<RegisterCustomerResponseModel>()
-            {
-                Code = (int)HttpStatusCode.OK,
-                Data = new RegisterCustomerResponseModel(),
-                Message = It.IsAny<string>()
-            });
-        
-        // Act
-        var result = await _customerController.LoginCustomer(new CustomerLoginRequestModel()
-        {
-           Email = customer.Email,
-           Password = It.IsAny<string>()
-        }) as ObjectResult;
-  
-        // Assert
-        Assert.Equal(200,result?.StatusCode);
     }
 
     [Fact]

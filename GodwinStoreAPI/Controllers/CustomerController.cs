@@ -15,32 +15,7 @@ public class CustomerController:ControllerBase
     {
         _customerServices = customerServices;
     }
-    
 
-    /// <summary>
-   /// Register a new customer
-   /// </summary>
-   /// <param name="requestModel"></param>
-   /// <returns></returns>
-    [HttpPost]
-    public async Task<IActionResult> RegisterCustomer([FromBody] RegisterCustomerRequestModel requestModel)
-    {
-        var response = await _customerServices.RegisterCustomerAsync(requestModel);
-        return StatusCode(response.Code,response);
-    }
-    
-    /// <summary>
-    /// Login Customer
-    /// </summary>
-    /// <param name="requestModel"></param>
-    /// <returns></returns>
-    [HttpPost("login")]
-    public async Task<IActionResult> LoginCustomer([FromBody] CustomerLoginRequestModel requestModel)
-    {
-        var response = await _customerServices.LoginCustomerAsync(requestModel);
-        return StatusCode(response.Code,response);
-    }
-    
     /// <summary>
     /// Filter customers
     /// </summary>
@@ -88,7 +63,6 @@ public class CustomerController:ControllerBase
     {
         var response = await _customerServices.DeleteCustomerAsync(customerId);
         return StatusCode(response.Code, response);
-
     }
     
 }

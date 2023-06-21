@@ -7,8 +7,6 @@ namespace GodwinStoreAPI.Services.CustomerServices;
 
 public interface ICustomerServices
 {
-    Task<BaseResponse<RegisterCustomerResponseModel>> RegisterCustomerAsync(RegisterCustomerRequestModel registerCustomer);
-    Task<BaseResponse<RegisterCustomerResponseModel>> LoginCustomerAsync(CustomerLoginRequestModel requestModel);
     Task<BaseResponse<PaginatedResponse<RegisterCustomerResponseModel>>> GetCustomersAsync(CustomerFilter customerFilter);
     Task<BaseResponse<RegisterCustomerResponseModel>> GetCustomerByIdAsync(string id);
     Task<BaseResponse<RegisterCustomerResponseModel>> UpdateCustomerAsync(string customerId, CustomerUpdateModel updateModel);

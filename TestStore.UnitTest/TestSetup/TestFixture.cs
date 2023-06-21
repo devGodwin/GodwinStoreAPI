@@ -1,4 +1,5 @@
 using AutoMapper;
+using GodwinStoreAPI.Services.AuthServices;
 using GodwinStoreAPI.Services.CustomerServices;
 using GodwinStoreAPI.Services.OrderServices;
 using GodwinStoreAPI.Services.ProductServices;
@@ -23,6 +24,7 @@ public class TestFixture
         services.AddScoped<IProductServices, ProductServices>();
         services.AddScoped<ICustomerServices, CustomerServices>();
         services.AddScoped<IOrderServices, OrderServices>();
+        services.AddScoped<IAuthServices, AuthServices>();
         
         ServiceProvider = services.BuildServiceProvider();
     }

@@ -4,6 +4,7 @@ using GodwinStoreAPI.Data.DbContexts;
 using GodwinStoreAPI.ElasticSearch;
 using GodwinStoreAPI.Helper;
 using GodwinStoreAPI.Redis;
+using GodwinStoreAPI.Services.AuthServices;
 using GodwinStoreAPI.Services.CustomerServices;
 using GodwinStoreAPI.Services.OrderServices;
 using GodwinStoreAPI.Services.ProductServices;
@@ -24,6 +25,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<CustomerContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionDb")));
 builder.Services.AddScoped<ICustomerServices, CustomerServices>();
+builder.Services.AddScoped<IAuthServices, AuthServices>();
 
 builder.Services.AddDbContext<OrderContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionDb")));
